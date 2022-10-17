@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-app.get('/', function(req, res) {
-    res.sendFile('index.html', {root: __dirname});
+app.get("/", function(req, res) {
+    res.sendFile("index.html", {root: __dirname});
 });
 
-app.use(express.static(__dirname + '/static'));
+app.use(express.static(__dirname + "/static"));
 
-app.listen(port, () => {
-    console.log(`Now listening on port ${port}`);
-});
+// start the server listening for requests
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
