@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3030;
 
-app.get("/", function(req, res) {
+app.get("/taplist/1", function(req, res) {
     res.send(JSON.stringify({conectou: "filho da puta"}));
 });
 
