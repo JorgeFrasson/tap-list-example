@@ -3,7 +3,7 @@ const app = express();
 const port = 3030;
 
 app.get("/", function(req, res) {
-    res.sendFile("index.html", {root: __dirname});
+    res.send(JSON.stringify({conectou: "filho da puta"}));
 });
 
 app.use(express.static(__dirname + "/static"));
