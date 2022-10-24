@@ -17,10 +17,11 @@ app.get("/disconnect/", function(req, res) {
 io.on('connection', (socket) => {
     console.log("User connected", socket);
     socket.on('action', (msg) => {
-        console.log(msg);
+            socket.send(JSON.stringify({
+                action: msg
+            }));
     });
 })
-
 
 app.use(express.static(__dirname + "/static"));
 
