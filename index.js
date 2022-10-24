@@ -3,7 +3,7 @@ const app = express();
 const port = 3030;
 
 app.get("/connect/", function(req, res) {
-    res.send(JSON.stringify({action: "connect"}));
+    res.send(JSON.stringify({action: "connect filho da puta"}));
 });
 
 app.get("/disconnect/", function(req, res) {
