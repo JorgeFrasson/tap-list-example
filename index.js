@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const port = 3030;
 
-app.get("/taplist/1", function(req, res) {
+app.get("/connect/", function(req, res) {
     res.send(JSON.stringify({conectou: "filho da puta"}));
+});
+
+app.get("/disconnect/", function(req, res) {
+    res.send(JSON.stringify({desconectou: "filho da puta"}));
 });
 
 app.use(express.static(__dirname + "/static"));
