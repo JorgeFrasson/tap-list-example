@@ -1,12 +1,6 @@
 const express = require('express');
 const app = express();
 const port = 3030;
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-
-const io_aws = new Server('wss://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev');
 
 app.get("/connect/", function(req, res) {
     res.send(JSON.stringify({action: "connect filho da puta"}));
@@ -20,17 +14,6 @@ app.get("/", function(req, res){
     console.log("dlsfknvblsdfknvlsdknvlsdknvlsdknvlsdknvlsdknvlsdknvlskdnvlsdknldkn");
     res.send(JSON.stringify(req.body));
 });
-
-io_aws.on('connection', (socket) => {
-    socket.send('action', "sdlvmsçdlmvçsd");
-});
-
-io.on('connection', (socket) => {
-    console.log("User connected", socket);
-    socket.on('action', (msg) => {
-        console.log("msg");
-    });
-})
 
 app.use(express.static(__dirname + "/static"));
 
