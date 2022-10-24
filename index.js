@@ -16,10 +16,7 @@ app.get("/disconnect/", function(req, res) {
 });
 
 app.get("/", function(req, res){
-    if(req.body.action = "sendmessage"){
-        console.log("Filho da puta");
-    }
-    res.send(JSON.stringify(req.body));
+    res.send(req.body);
 });
 
 
