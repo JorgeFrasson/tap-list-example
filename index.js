@@ -6,9 +6,6 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const io_aws = io('wss://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev'
-        
-);
 
 app.get("/connect/", function(req, res) {
     res.send(JSON.stringify({action: "connect filho da puta"}));
