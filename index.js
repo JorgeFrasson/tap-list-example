@@ -14,6 +14,11 @@ app.get("/disconnect/", function(req, res) {
     res.send(JSON.stringify({action: "disconnect"}));
 });
 
+app.get("/", function(req, res){
+    console.log("dlsfknvblsdfknvlsdknvlsdknvlsdknvlsdknvlsdknvlsdknvlskdnvlsdknldkn");
+    res.send(JSON.stringify({action: "BANANA"}))
+});
+
 io.on('connection', (socket) => {
     console.log("User connected", socket);
     socket.on('action', (msg) => {
