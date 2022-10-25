@@ -20,6 +20,8 @@ app.get("/send", function(req, res){
 });
 
 app.get("/", function(req, res){
+    console.log(JSON.parse(req));
+    console.log(req);
     res.send(JSON.stringify(req.body));
 });
 
