@@ -16,12 +16,12 @@ app.get("/disconnect/", function(req, res) {
 });
 
 app.get("/send/", function(req, res){
-    console.log(JSON.parse(req));
+    console.log(JSON.parse(req.body));
     res.send(JSON.stringify("FILHA DA PUTA"));
 });
 
 app.get("/", function(req, res){
-    console.log(req.body);
+    console.log(JSON.parse(req.body));
     res.send(JSON.stringify("FILHA DA PUTA"));
 });
 
