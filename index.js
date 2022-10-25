@@ -4,7 +4,7 @@ const port = 3030;
 const bodyParser = require('body-parser')
 const axios = require('axios');
 
-let screenDevice = [];
+let connections = [];
 let API_URL_WSS = 'https://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev/@connections'
 
 app.use(bodyParser.json());
