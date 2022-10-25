@@ -16,8 +16,9 @@ app.post("/connect", function(req, res){
     res.sendStatus(200);
 });
 
-app.get("/disconnect", function (req, res){
-    console.log("/disconnect endpoint is invoked");
+app.post("/disconnect", function (req, res){
+    console.log("o usuario" + req.body.connectionId + " desconectou");
+    connections.splice(connections.indexOf(connectionId), 1);
     res.sendStatus(200);
 });
 
