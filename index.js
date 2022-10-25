@@ -15,6 +15,10 @@ app.get("/disconnect", function(req, res) {
     res.send(JSON.stringify("disconnect"));
 });
 
+app.get("/sendtap", function(req, res){
+    res.send(JSON.stringify({message: "hello from server"}));
+});
+
 app.get("/send", function(req, res){
     res.send(JSON.stringify({message: "hello from server"}));
 });
