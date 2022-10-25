@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.post("/connect", function(req, res){
     const connectionId = req.body.connectionId;
     connections.push(connectionId);
-    console.log("O user: " + connectionId + " endpoint is invoked");
+    console.log("O user: " + connectionId + " se conectou a sala de chat");
     res.sendStatus(200);
 });
 
@@ -23,7 +23,7 @@ app.get("/disconnect", function (req, res){
 
 app.post("/sendmessage", function(req, res){
     for(let i = 0; i < connections.length; i ++){
-
+        console.log("O usuário " + connections[i] + " está conectado!");
     }
     res.send(req.body.message);
 });
