@@ -24,6 +24,7 @@ app.post("/sendmessage", function(req, res){
 
 app.post("/send", function(req, res){
     console.log(req.headers);
+    connections.push(req.headers.connectionid);
     console.log(req.query);
     console.log(req.body);
     res.send(req.body.payload.message);
