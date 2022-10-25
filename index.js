@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.get("/connect", function(req, res){
     console.log("/connect endpoint is invoked");
-    connections.push(req.body.connectionId);
+    console.log(req.body);
     console.log(connections);
     res.sendStatus(200);
 });
