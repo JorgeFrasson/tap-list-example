@@ -7,21 +7,19 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 
-app.get("/connect/", function(req, res) {
+app.get("/connect", function(req, res) {
     res.send(JSON.stringify({action: "connect filho da puta"}));
 });
 
-app.get("/disconnect/", function(req, res) {
+app.get("/disconnect", function(req, res) {
     res.send(JSON.stringify("disconnect"));
 });
 
-app.get("/send/", function(req, res){
-    console.log(JSON.parse(req.body));
-    res.send(JSON.stringify("FILHA DA PUTA"));
+app.get("/send", function(req, res){
+    res.send(JSON.stringify({message: "hello from server"}));
 });
 
 app.get("/", function(req, res){
-    console.log(JSON.parse(req.body));
     res.send(JSON.stringify("FILHA DA PUTA"));
 });
 
