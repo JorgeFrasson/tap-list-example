@@ -24,7 +24,7 @@ app.post("/disconnect", function (req, res){
 });
 
 app.post("/sendmessage", function(req, res){
-    console.log(connections);
+    console.log("s,kdvsjmldvsdjnvsdjnv");
     
     const connectionId = req.body.connectionId;
     const HEADER = {
@@ -37,7 +37,7 @@ app.post("/sendmessage", function(req, res){
 
 
     axios
-        .post(API_URL_WSS + "/" + connectionId, req.body, HEADER)
+        .post(API_URL_WSS + "/" + connectionId, req.body.payload.message, HEADER)
         .then((response) => {
             if(response.status === 201){
                 console.log(response.data);
