@@ -20,7 +20,7 @@ app.get("/send", function(req, res){
 });
 
 app.get("/", function(req, res){
-    res.send(JSON.stringify(req.body.connectionId));
+    res.send(JSON.stringify(req.body));
 });
 
 
