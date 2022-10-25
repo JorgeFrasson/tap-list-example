@@ -16,16 +16,15 @@ app.get("/disconnect", function(req, res) {
 });
 
 app.get("/sendtap", function(req, res){
-    res.send(JSON.stringify({message: "hello from server"}));
+    res.send(JSON.stringify({message: "hello from sendtap route"}));
 });
 
 app.get("/send", function(req, res){
-    res.send(JSON.stringify({message: "hello from server"}));
+    res.send(JSON.stringify({message: "hello from sendmessage route"}));
 });
 
 app.get("/", function(req, res){
     console.log("Tô aqui buceta de dragão");
-    console.log(req);
     res.send(JSON.stringify(req.body));
 });
 
