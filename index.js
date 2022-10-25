@@ -20,9 +20,9 @@ app.post("/sendmessage", function(req, res){
 });
 
 app.post("/send", function(req, res){
-    console.log(req.body);
-    console.log(req.query);
     console.log(req.headers);
+    console.log(req.query);
+    console.log(req.body);
     res.send(JSON.stringify({message: "hello from sendmessage route"}));
 });
 
