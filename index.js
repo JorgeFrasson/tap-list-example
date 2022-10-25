@@ -16,8 +16,7 @@ app.get("/disconnect", function (req, res){
 });
 
 app.post("/sendmessage", function(req, res){
-    const msg = JSON.parse(req.body.message);
-    res.send(JSON.stringify({"messageFromServer": msg}));
+    res.send(req.body.message);
 });
 
 app.post("/send", function(req, res){
