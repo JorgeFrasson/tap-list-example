@@ -12,11 +12,11 @@ app.get("/connect/", function(req, res) {
 });
 
 app.get("/disconnect/", function(req, res) {
-    res.send(JSON.stringify({action: "disconnect"}));
+    res.send(JSON.stringify("disconnect"));
 });
 
 app.get("/", function(req, res){
-    res.send(req.body);
+    res.send(JSON.stringify("action"));
 });
 
 
