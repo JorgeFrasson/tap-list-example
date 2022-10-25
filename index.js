@@ -16,9 +16,6 @@ app.get("/disconnect", function(req, res) {
 });
 
 app.get("/sendtap", function(req, res){
-    console.log(req);
-    console.log(req.body);
-    console.log(req.body.message);
     res.send(JSON.stringify({message: "hello from sendtap route"}));
 });
 
