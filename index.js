@@ -15,8 +15,9 @@ app.get("/disconnect", function (req, res){
     res.sendStatus(200);
 });
 
-app.get("/sendtap", function(req, res){
-    res.send(JSON.stringify({message: "hello from sendtap route"}));
+app.post("/sendmessage", function(req, res){
+    const msg = JSON.parse(req.body.message);
+    res.send(JSON.stringify({"messageFromServer": msg}));
 });
 
 app.post("/send", function(req, res){
