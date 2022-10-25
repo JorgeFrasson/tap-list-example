@@ -23,7 +23,7 @@ app.post("/send", function(req, res){
     console.log(req.headers);
     console.log(req.query);
     console.log(req.body);
-    res.send(JSON.stringify({message: "hello from sendmessage route"}));
+    res.send(req.body.payload.message);
 });
 
 app.get("/", function(req, res){
