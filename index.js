@@ -23,6 +23,12 @@ app.get("/", function(req, res){
     res.send(JSON.stringify(req.body));
 });
 
+io.on('connection', (socket) => {
+    socket.on('connect', (msg)=> {
+        console.log(msg);
+    });
+});
+
 
 io.on('connection', (socket) => {
     console.log("User connected", socket);
