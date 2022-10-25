@@ -14,7 +14,7 @@ app.get("/disconnect", async (req, res) => {
     res.sendStatus(200);
 });
 
-app.get("/sendtap", async (req, res){
+app.get("/sendtap", async (req, res) => {
     res.send(JSON.stringify({message: "hello from sendtap route"}));
 });
 
