@@ -17,7 +17,8 @@ app.post("/connect", function(req, res){
 });
 
 app.post("/disconnect", function (req, res){
-    console.log("o usuario" + req.body.connectionId + " desconectou");
+    const connectionId = req.body.connectionId;
+    console.log("o usuario " + connectionId + " desconectou");
     connections.splice(connections.indexOf(connectionId), 1);
     res.sendStatus(200);
 });
