@@ -19,7 +19,8 @@ app.get("/sendtap", function(req, res){
     res.send(JSON.stringify({message: "hello from sendtap route"}));
 });
 
-app.get("/send", function(req, res){
+app.post("/send", function(req, res){
+    console.log(req.body);
     res.send(JSON.stringify({message: "hello from sendmessage route"}));
 });
 
