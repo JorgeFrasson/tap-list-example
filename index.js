@@ -5,11 +5,14 @@ const bodyParser = require('body-parser')
 
 let connections = [];
 
+let API_URL_WSS = 'https://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev/@connections'
+
 app.use(bodyParser.json());
 
-app.get("/connect", function(req, res){
-    console.log("/connect endpoint is invoked");
-    console.log(req.headers);
+app.post("/connect", function(req, res){
+    const connectionId = req.body.connectionId;
+    connections.push(connectionId);
+    console.log("O user: " + connectionId + " endpoint is invoked");
     res.sendStatus(200);
 });
 
@@ -19,15 +22,16 @@ app.get("/disconnect", function (req, res){
 });
 
 app.post("/sendmessage", function(req, res){
+    for(let i = 0; i < connections.length; i ++){
+
+    }
     res.send(req.body.message);
 });
 
 app.post("/send", function(req, res){
     console.log(req.headers);
-    connections.push(req.headers.connectionid);
     console.log(req.query);
     console.log(req.body);
-    console.log(connections);
     res.send(req.body.payload.message);
 });
 
