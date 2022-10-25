@@ -30,8 +30,7 @@ app.post("/sendmessage", function(req, res){
     const HEADER = {
         headers: {
             Accept: 'application/json',
-            accessKeyId: "AKIA23GEF46NXMHWM3VW",
-            secretAccessKey: "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",
+            Authorization: "AWS4-HMAC-SHA256 Credential=AKIA23GEF46NXMHWM3VW/20221025/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=bb5365f9a6ff38dd0eb958a4360994f02f08f9cb0c65c6f3483a2269768a543a"
         }
     }
 
