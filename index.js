@@ -19,8 +19,10 @@ app.get("/sendtap", function(req, res){
     res.send(JSON.stringify({message: "hello from sendtap route"}));
 });
 
-app.post("/send", function(req, res){
+app.post("/send", async (req, res)=> {
     console.log(req.body);
+    console.log(req.query);
+    console.log(req.headers);
     res.send(JSON.stringify({message: "hello from sendmessage route"}));
 });
 
