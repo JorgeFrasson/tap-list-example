@@ -3,10 +3,14 @@ const app = express();
 const port = 3030;
 const bodyParser = require('body-parser')
 
+let connections = [];
+
 app.use(bodyParser.json());
 
 app.get("/connect", function(req, res){
     console.log("/connect endpoint is invoked");
+    connections.push(req.body.connectionId);
+    console.log(connections);
     res.sendStatus(200);
 });
 
