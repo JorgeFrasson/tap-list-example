@@ -15,6 +15,11 @@ app.get("/disconnect/", function(req, res) {
     res.send(JSON.stringify("disconnect"));
 });
 
+app.get("/send/", function(req, res){
+    console.log(JSON.parse(req));
+    res.send(JSON.stringify("FILHA DA PUTA"));
+});
+
 app.get("/", function(req, res){
     console.log(req.body);
     res.send(JSON.stringify("FILHA DA PUTA"));
