@@ -24,7 +24,7 @@ app.post("/disconnect", function (req, res){
 });
 
 app.post("/sendmessage", function(req, res){
-    const connectionId = req.body.connectionID
+    const connectionId = req.body.connectionID;
     const HEADER = {
         headers: {
             Accept: 'application/json',
@@ -32,6 +32,9 @@ app.post("/sendmessage", function(req, res){
             secretAccessKey: "G1kD45/8rcfZ0zVi23tq+f+bE12aojOCu9uB6cir",
         }
     }
+
+    console.log(connections);
+
     axios
         .post(API_URL_WSS + "/" + connectionId, req.body, HEADER)
         .then((response) => {
