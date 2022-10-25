@@ -39,7 +39,6 @@ app.post("/sendmessage", function(req, res){
         }
     }
 
-
     axios
         .post(API_URL_WSS + "/" + connectionId, req.body.payload.message, HEADER)
         .then((response) => {
