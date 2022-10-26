@@ -17,14 +17,14 @@ app.post("/connect", function(req, res){
     res.sendStatus(200);
 });
 
-app.post("/disconnect", function (req, res){
+app.post("/disconnect", async (req, res) => {
     const connectionId = req.body.connectionId;
     console.log("o usuario " + connectionId + " desconectou");
     connections.splice(connections.indexOf(connectionId), 1);
     res.sendStatus(200);
 });
 
-app.post("/sendmessage", function(req, res){
+app.post("/sendmessage", async (req, res) => {
     console.log("s,kdvsjmldvsdjnvsdjnv");
     const connectionId = req.body.connectionId;
     
@@ -42,6 +42,10 @@ app.post("/sendmessage", function(req, res){
     
         delete signedRequest.headers['Host']
         delete signedRequest.headers['Content-Length']
+
+        let response = await axios(signedRequest);
+        console.log(response);
+
     }
     res.send("Mensagem recebida de " + req.body.connectionId);
 });
