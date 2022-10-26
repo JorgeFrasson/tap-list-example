@@ -3,6 +3,7 @@ const app = express();
 const port = 3030;
 const bodyParser = require('body-parser')
 const axios = require('axios');
+const aws4 = require('aws4')
 
 let connections = [];
 let API_URL_WSS = 'https://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev/@connections'
@@ -25,29 +26,22 @@ app.post("/disconnect", function (req, res){
 
 app.post("/sendmessage", function(req, res){
     console.log("s,kdvsjmldvsdjnvsdjnv");
-    
     const connectionId = req.body.connectionId;
-    const HEADER = {
-        headers: {
-            Accept: 'application/json',
-            Authorization:"AWS4-HMAC-SHA256 Credential=AKIA23GEF46NXMHWM3VW/20221025/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1099985bc4a3080125583daf04250e0d829a034f2428bc0c1abef5052bb2db9e",
-            "x-amz-date": "20221026T112843Z"
-        }
-    }
-
-    axios
-        .post(API_URL_WSS + "/" + connectionId, req.body.payload.message, HEADER)
-        .then((response) => {
-            if(response.status === 201){
-                console.log(response.data);
-                console.log(response.headers);
-            }
-        })
-        .catch((e) => {
-            console.log(e);
-        })
+    
     for(let i = 0; i < connections.length; i ++){
-        console.log("O usuário " + connections[i] + " está conectado!");
+        let request = {
+            method: 'POST',
+            url: API_URL_WSS + "/" + connections[i],
+            body: req.body.msg
+        }
+    
+        let signedRequest = aws4.sign(request,{
+            secretAccessKey: "G1kD45/8rcfZ0zVi23tq+f+bE12aojOCu9uB6cir",
+            accessKeyId: "AKIA23GEF46NXMHWM3VW"
+        })
+    
+        delete signedRequest.headers['Host']
+        delete signedRequest.headers['Content-Length']
     }
     res.send("Mensagem recebida de " + req.body.connectionId);
 });
