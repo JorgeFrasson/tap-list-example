@@ -34,6 +34,11 @@ app.post("/sendmessage", async (req, res) => {
     const postData = req.body.payload.message; 
 
     const apiEndpoint = domainName + '/' + stage;
+    
+    console.log("connectionId: ", connectionId);
+    console.log("region: ", region);
+    console.log("apiEndpoint: ", apiEndpoint);
+    console.log("Data ", postData);
 
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: 'v2',
