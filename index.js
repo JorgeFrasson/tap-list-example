@@ -6,17 +6,9 @@ const axios = require('axios');
 const aws4 = require('aws4');
 const AWS = require('aws-sdk');
 
-const authConfig = {
-    apiVersion: "v1",
-    accessKeyId: "AKIA23GEF46NXMHWM3VW",
-    accessSecretKey: "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",
-    region: "us-east-1"
-}
-
-AWS.config.update(authConfig);
+AWS.config.loadFromPath('./credentials.json');
 
 let connections = [];
-let API_URL_WSS = 'https://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev/@connections'
 
 app.use(bodyParser.json());
 
