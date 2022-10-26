@@ -58,12 +58,40 @@ app.post("/sendmessage", async (req, res) => {
             console.log('Não foi possível enviar a mensagem devido a: ', e);
         }
     }
-    res.send(JSON.stringify("Mensagem recebida de " + connectionId));
+    res.send("Mensagem recebida de " + connectionId);
 });
 
 app.post("/sendtap", async (req, res)=> {
-    console.log("Rota funcionando!!!");
-    res.send(JSON.stringify("rota funcionando!!"));
+    const connectionId = req.body.connectionId;
+    const region = req.body.region;
+    const domainName = req.body.domainName;
+    const stage = req.body.stage;
+    const postData = JSON.stringify(req.body.payload.tap); 
+
+    const apiEndpoint = domainName + '/' + stage;
+    
+    console.log("connectionId: ", connectionId);
+    console.log("region: ", region);
+    console.log("apiEndpoint: ", apiEndpoint);
+    console.log("Data ", postData);
+
+    const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+        apiVersion: 'v2',
+        region: region,
+        endpoint: apiEndpoint
+    });
+
+    for(let i = 0; i < connections.length; i ++){
+        try {
+            await apigwManagementApi.postToConnection({ 
+                ConnectionId: connections[i],
+                Data: postData
+            }).promise()
+        } catch (e) {
+            console.log('Não foi possível enviar a mensagem devido a: ', e);
+        }
+    }
+    res.send("Mensagem recebida de " + connectionId);
 });
 
 app.post("/send", function(req, res){
