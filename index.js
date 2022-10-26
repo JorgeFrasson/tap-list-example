@@ -27,6 +27,15 @@ app.post("/disconnect", async (req, res) => {
 
 app.post("/sendmessage", async (req, res) => {
     console.log("s,kdvsjmldvsdjnvsdjnv");
+    const authConfig = {
+        apiVersion: "v1",
+        accessKeyId: "AKIA23GEF46NXMHWM3VW",
+        accessSecretKey: "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",
+        region: "us-east-1"
+    }
+
+    AWS.config.update(authConfig);
+
     const connectionId = req.body.connectionId;
     const region = req.body.region;
     const domainName = req.body.domainName;
