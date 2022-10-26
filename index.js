@@ -9,6 +9,8 @@ const AWS = require('aws-sdk');
 AWS.config.loadFromPath('./credentials.json');
 
 let connections = [];
+let tokens = [];
+let devices = [];
 
 app.use(bodyParser.json());
 
