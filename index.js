@@ -3,7 +3,8 @@ const app = express();
 const port = 3030;
 const bodyParser = require('body-parser')
 const axios = require('axios');
-const aws4 = require('aws4')
+const aws4 = require('aws4');
+const AWS = require('aws-sdk');
 
 let connections = [];
 let API_URL_WSS = 'https://8ffxu1gb54.execute-api.us-east-1.amazonaws.com/dev/@connections'
@@ -27,27 +28,30 @@ app.post("/disconnect", async (req, res) => {
 app.post("/sendmessage", async (req, res) => {
     console.log("s,kdvsjmldvsdjnvsdjnv");
     const connectionId = req.body.connectionId;
-    
+    const region = req.body.region;
+    const domainName = req.body.domainName;
+    const stage = req.body.stage;
+    const postData = req.body.payload.message; 
+
+    const apiEndpoint = domainName + '/' + stage;
+
+    const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+        apiVersion: 'v2',
+        region: region,
+        endpoint: apiEndpoint
+    });
+
     for(let i = 0; i < connections.length; i ++){
-        let request = {
-            method: 'POST',
-            url: API_URL_WSS + "/" + connections[i],
-            body: req.body.msg
+        try {
+            await apigwManagementApi.postToConnection({ 
+                ConnectionId: connections[i],
+                Data: postData
+            }).promise()
+        } catch (e) {
+            console.log('Não foi possível enviar a mensagem devido a: ', e);
         }
-    
-        let signedRequest = aws4.sign(request,{
-            secretAccessKey: "G1kD45/8rcfZ0zVi23tq+f+bE12aojOCu9uB6cir",
-            accessKeyId: "AKIA23GEF46NXMHWM3VW"
-        })
-    
-        delete signedRequest.headers['Host']
-        delete signedRequest.headers['Content-Length']
-
-        let response = await axios(signedRequest);
-        console.log(response);
-
     }
-    res.send("Mensagem recebida de " + req.body.connectionId);
+    res.send("Mensagem recebida de " + connectionId);
 });
 
 app.post("/send", function(req, res){
