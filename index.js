@@ -58,7 +58,12 @@ app.post("/sendmessage", async (req, res) => {
             console.log('Não foi possível enviar a mensagem devido a: ', e);
         }
     }
-    res.send("Mensagem recebida de " + connectionId);
+    res.send(JSON.stringify("Mensagem recebida de " + connectionId));
+});
+
+app.post("/sendtap", async (req, res)=> {
+    console.log("Rota funcionando!!!");
+    res.send(JSON.stringify("rota funcionando!!"));
 });
 
 app.post("/send", function(req, res){
