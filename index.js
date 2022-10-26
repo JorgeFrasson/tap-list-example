@@ -30,7 +30,8 @@ app.post("/sendmessage", function(req, res){
     const HEADER = {
         headers: {
             Accept: 'application/json',
-            Authorization:"AWS4-HMAC-SHA256 Credential=AKIA23GEF46NXMHWM3VW/20221025/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1099985bc4a3080125583daf04250e0d829a034f2428bc0c1abef5052bb2db9e"
+            Authorization:"AWS4-HMAC-SHA256 Credential=AKIA23GEF46NXMHWM3VW/20221025/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1099985bc4a3080125583daf04250e0d829a034f2428bc0c1abef5052bb2db9e",
+            "x-amz-date": "20160726T033659Z"
         }
     }
 
