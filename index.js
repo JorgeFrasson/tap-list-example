@@ -77,6 +77,7 @@ app.post("/ping", function(req, res){
 app.post("/connect", function(req, res){
     let token = generateTokenWithConnection();
     console.log(token);
+    console.log("Dispositivo onectado com ID:", req.body.connectionId);
     res.status(200).end(token)
 });
 
