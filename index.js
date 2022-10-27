@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.post("/ping", function(req, res){
     const connectionId = req.body.connectionId;
     const token = req.body.payload.token;
-    const deviceId = req.body.paylad.deviceId; 
+    const deviceId = req.body.payload.deviceId; 
     
     connections.push(connectionId);
     activeTtokens.push(token);
