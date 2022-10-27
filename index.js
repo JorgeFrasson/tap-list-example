@@ -5,44 +5,77 @@ const bodyParser = require('body-parser')
 const axios = require('axios');
 const aws4 = require('aws4');
 const AWS = require('aws-sdk');
+const { TokenFileWebIdentityCredentials } = require('aws-sdk');
 
 AWS.config.loadFromPath('./credentials.json');
 
 let connections = [];
-let tokens = [];
 let devices = [];
+let activeTokens = [];
+let tapListByToken = [];
+
+function getTaplistByDevice(device){
+    if(activeTokens.indexOf(device.token) === -1){
+        return
+    }
+
+    tapListByToken.forEach(tapList => {
+        if(tapList.token === token){
+            return tapList;
+        }
+    });
+}
 
 app.use(bodyParser.json());
 
-app.post("/connect", function(req, res){
+app.post("/ping", function(req, res){
     const connectionId = req.body.connectionId;
+    const token = req.body.payload.token;
+    const deviceId = req.body.paylad.deviceId; 
+    
     connections.push(connectionId);
-    console.log("O user: " + connectionId + " se conectou a sala de chat");
+    activeTtokens.push(token);
+    devices.push(deviceId);
+
+    console.log("O dispositivo: ", deviceId);
+    console.log("ConnectionId: ", connectionId);
+    console.log("Token: ", token);
+    
+    res.sendStatus(200);
+});
+
+app.post("/connect", function(req, res){
     res.sendStatus(200);
 });
 
 app.post("/disconnect", async (req, res) => {
     const connectionId = req.body.connectionId;
+    const token = req.body.payload.token;
+
     console.log("o usuario " + connectionId + " desconectou");
+    
     connections.splice(connections.indexOf(connectionId), 1);
+    activeTokens.splice(activeTokens.indexOf(token), 1);
     res.sendStatus(200);
 });
 
-app.post("/sendmessage", async (req, res) => {
-    console.log("s,kdvsjmldvsdjnvsdjnv");
 
+app.post("/sendtaplist", async (req, res)=> {
     const connectionId = req.body.connectionId;
+    const device = req.body.deviceId;
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
-    const postData = req.body.payload.message; 
-
+    
+    tapList = getTaplistByDevice(JSON.parse(device));
+    
+    const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
     
     console.log("connectionId: ", connectionId);
     console.log("region: ", region);
-    console.log("apiEndpoint: ", apiEndpoint);
-    console.log("Data ", postData);
+    console.log("apiEndpoint: ", apiEndpoint); 
+    console.log("Data ", tapList);
 
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: 'v2',
@@ -50,57 +83,15 @@ app.post("/sendmessage", async (req, res) => {
         endpoint: apiEndpoint
     });
 
-    for(let i = 0; i < connections.length; i ++){
-        try {
-            await apigwManagementApi.postToConnection({ 
-                ConnectionId: connections[i],
-                Data: postData
-            }).promise()
-        } catch (e) {
-            console.log('Não foi possível enviar a mensagem devido a: ', e);
-        }
+    try {
+        await apigwManagementApi.postToConnection({ 
+            ConnectionId: connectionId,
+            Data: postData
+        }).promise()
+    } catch (e) {
+        console.log('Não foi possível enviar a mensagem devido a: ', e);
     }
     res.send("Mensagem recebida de " + connectionId);
-});
-
-app.post("/sendtap", async (req, res)=> {
-    const connectionId = req.body.connectionId;
-    const region = req.body.region;
-    const domainName = req.body.domainName;
-    const stage = req.body.stage;
-    const postData = JSON.stringify(req.body.payload.tap); 
-
-    const apiEndpoint = domainName + '/' + stage;
-    
-    console.log("connectionId: ", connectionId);
-    console.log("region: ", region);
-    console.log("apiEndpoint: ", apiEndpoint);
-    console.log("Data ", postData);
-
-    const apigwManagementApi = new AWS.ApiGatewayManagementApi({
-        apiVersion: 'v2',
-        region: region,
-        endpoint: apiEndpoint
-    });
-
-    for(let i = 0; i < connections.length; i ++){
-        try {
-            await apigwManagementApi.postToConnection({ 
-                ConnectionId: connections[i],
-                Data: postData
-            }).promise()
-        } catch (e) {
-            console.log('Não foi possível enviar a mensagem devido a: ', e);
-        }
-    }
-    res.send("Mensagem recebida de " + connectionId);
-});
-
-app.post("/send", function(req, res){
-    console.log(req.headers);
-    console.log(req.query);
-    console.log(req.body);
-    res.send(req.body.payload.message);
 });
 
 app.get("/", function(req, res){
@@ -111,3 +102,5 @@ app.get("/", function(req, res){
 // start the server listening for requests
 app.listen(process.env.PORT || port, 
 	() => console.log("Server is running..."));
+
+
