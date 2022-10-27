@@ -92,7 +92,7 @@ app.post("/sendtaplist", async (req, res)=> {
 
 app.post("/", function(req, res){
     console.log("Tô aqui buceta de dragão");
-    res.send(JSON.stringify(req.body));
+    res.send(req.body.payload);
 });
 
 // start the server listening for requests
