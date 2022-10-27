@@ -101,7 +101,8 @@ app.post("/get-token", async (req, res) => {
     } catch (e) {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
     }
-    res.send("Token enviado para", connectionId)
+
+    res.send("Token enviado para", connectionId);
 });
 
 app.post("/connect", async (req, res) => {
