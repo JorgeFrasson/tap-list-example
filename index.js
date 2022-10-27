@@ -16,7 +16,7 @@ let tapListByToken = [];
 
 function getDeviceById(deviceId){
     devices.forEach(device => {
-        if(device.id === deviceId){
+        if(device['id'] === deviceId){
             return device
         }
     });
