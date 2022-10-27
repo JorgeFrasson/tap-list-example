@@ -76,7 +76,6 @@ app.post("/ping", function(req, res){
 
 app.post("/connect", async (req, res) => {
     const connectionId = req.body.connectionId;
-    const deviceId = req.body.payload.deviceId;
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
