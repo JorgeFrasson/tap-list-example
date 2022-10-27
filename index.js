@@ -32,15 +32,21 @@ app.post("/ping", function(req, res){
     const connectionId = req.body.connectionId;
     const token = req.body.payload.token;
     const deviceId = req.body.payload.deviceId; 
-    
+    let device = {
+        id: deviceId,
+        connectionId: connectionId,
+        token: token,
+    }
+
     connections.push(connectionId);
-    activeTtokens.push(token);
-    devices.push(deviceId);
+    activeTokens.push(token);
+    devices.push(device);
 
     console.log("O dispositivo: ", deviceId);
     console.log("ConnectionId: ", connectionId);
     console.log("Token: ", token);
-    
+
+    console.log(devices);
     res.sendStatus(200);
 });
 
