@@ -85,7 +85,7 @@ app.post("/get-token", async (req, res) => {
     console.log("connectionId: ", connectionId);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
-    console.log("Data ", tapList);
+    console.log("Data ", token);
 
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: 'v2',
