@@ -77,14 +77,14 @@ app.post("/ping", function(req, res){
 app.post("/connect", function(req, res){
     let token = generateTokenWithConnection();
     console.log(token);
-    res.status(200).send(token)
+    res.sendStatus(200).json(token)
 });
 
 app.post("/disconnect", async (req, res) => {
     const connectionId = req.body.connectionId;
     console.log("o usuario " + connectionId + " desconectou");
     connections.splice(connections.indexOf(connectionId), 1);
-    res.sendStatus();
+    res.sendStatus(200);
 });
 
 
