@@ -43,15 +43,24 @@ app.post("/ping", function(req, res){
     const connectionId = req.body.connectionId;
     const token = req.body.payload.token;
     const deviceId = req.body.payload.deviceId; 
+    let deviceCount = -1;
     let device = {
         id: deviceId,
         connectionId: connectionId,
         token: token,
     }
 
-    connections.push(connectionId);
-    activeTokens.push(token);
-    devices.push(device);
+    devices.forEach(item => {
+        if(item['id'] == deviceId){
+            count += 1;
+        } 
+    });
+
+    if(deviceCount == -1){
+        connections.push(connectionId);
+        activeTokens.push(token);
+        devices.push(device);
+    }
 
     console.log("O dispositivo:", deviceId);
     console.log("ConnectionId:", connectionId);
@@ -86,9 +95,6 @@ app.post("/sendtaplist", async (req, res)=> {
     const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
 
-    console.log(req.body);
-    console.log(device);
-    
     console.log("connectionId: ", device['connectionId']);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
