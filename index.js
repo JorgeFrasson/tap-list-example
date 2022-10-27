@@ -69,11 +69,11 @@ app.post("/disconnect", async (req, res) => {
 
 app.post("/sendtaplist", async (req, res)=> {
     const connectionId = req.body.connectionId;
-    const deviceId = req.body.deviceId;
+    const deviceId = req.body.payload.deviceId;
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
-    const tapList = req.body.taplist;
+    const tapList = req.body.payload.taplist;
     
     const device = getDeviceById(deviceId);
     
