@@ -77,7 +77,8 @@ app.post("/ping", function(req, res){
 app.post("/connect", function(req, res){
     let token = generateTokenWithConnection();
     console.log(token);
-    res.status(200).send("O token gerado foi", token);
+    res.send("O token gerado foi", token);
+    res.senStatus(200)
 });
 
 app.post("/disconnect", async (req, res) => {
