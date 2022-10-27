@@ -17,7 +17,7 @@ let tapListByToken = [];
 function getDeviceById(deviceId){
     devices.forEach(device => {
         console.log("Tô aqui piranha!!");
-        console.log(deviceId);
+        console.log(string(deviceId));
         console.log(device);
         if(device['id'] == deviceId){
             return device
