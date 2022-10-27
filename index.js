@@ -74,21 +74,19 @@ app.post("/ping", function(req, res){
     res.sendStatus(200);
 });
 
-app.post("/connect", async (req, res) => {
+app.post("/get-token", async (req, res) => {
+    const token = getTokenByDevice();
+
     const connectionId = req.body.connectionId;
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
-    let token = generateTokenWithConnection();
-    
-    
-    const postData = token; 
     const apiEndpoint = domainName + '/' + stage;
 
     console.log("connectionId: ", connectionId);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
-    console.log("Data ", postData);
+    console.log("Data ", tapList);
 
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: 'v2',
@@ -99,15 +97,16 @@ app.post("/connect", async (req, res) => {
     try {
         await apigwManagementApi.postToConnection({ 
             ConnectionId: connectionId,
-            Data: postData
+            Data: token
         }).promise()
     } catch (e) {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
     }
+    res.send("Token enviado para", connectionId)
+});
 
-    console.log(token);
-    console.log("Dispositivo onectado com ID:", req.body.connectionId);
-    res.status(200).end(token);
+app.post("/connect", async (req, res) => {
+    res.sendStatus(200);
 });
 
 app.post("/disconnect", async (req, res) => {
