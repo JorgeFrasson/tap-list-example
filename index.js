@@ -15,14 +15,20 @@ let activeTokens = [];
 let tapListByToken = [];
 
 function getDeviceById(deviceId){
-    devices.forEach(device => {
+    let device = {};
+
+    devices.forEach(item => {
         console.log("Tô aqui piranha!!");
         console.log(deviceId.toString());
-        console.log(device);
-        if(device['id'] == deviceId.toString()){
-            return device
+        console.log(item);
+        console.log(item['id']);
+        if(item['id'] == deviceId.toString()){
+            device = item;
         }
     });
+
+    return device;
+
 }
 
 function getTokenByDevice(device){
