@@ -85,7 +85,7 @@ app.post("/connect", async (req, res) => {
     const postData = token; 
     const apiEndpoint = domainName + '/' + stage;
 
-    console.log("connectionId: ", connectionID);
+    console.log("connectionId: ", connectionId);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
     console.log("Data ", postData);
