@@ -14,16 +14,20 @@ let devices = [];
 let activeTokens = [];
 let tapListByToken = [];
 
-function getTaplistByDevice(device){
-    if(activeTokens.indexOf(device.token) === -1){
-        return
-    }
-
-    tapListByToken.forEach(tapList => {
-        if(tapList.token === token){
-            return tapList;
+function getDeviceById(deviceId){
+    devices.forEach(device => {
+        if(device.id === deviceId){
+            if(getTokenByDevice()){
+                return device;
+            }
         }
     });
+}
+
+function getTokenByDevice(device){
+    if(activeTokens.indexOf(device.token) === -1){
+        return true
+    }
 }
 
 app.use(bodyParser.json());
@@ -42,9 +46,9 @@ app.post("/ping", function(req, res){
     activeTokens.push(token);
     devices.push(device);
 
-    console.log("O dispositivo: ", deviceId);
-    console.log("ConnectionId: ", connectionId);
-    console.log("Token: ", token);
+    console.log("O dispositivo:", deviceId);
+    console.log("ConnectionId:", connectionId);
+    console.log("Token:", token);
 
     console.log(devices);
     res.sendStatus(200);
@@ -64,17 +68,18 @@ app.post("/disconnect", async (req, res) => {
 
 app.post("/sendtaplist", async (req, res)=> {
     const connectionId = req.body.connectionId;
-    const device = req.body.deviceId;
+    const deviceId = req.body.deviceId;
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
+    const tapList = req.body.taplist;
     
-    tapList = getTaplistByDevice(JSON.parse(device));
+    const device = getDeviceById(deviceId);
     
     const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
     
-    console.log("connectionId: ", connectionId);
+    console.log("connectionId: ", device.connectionId);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
     console.log("Data ", tapList);
