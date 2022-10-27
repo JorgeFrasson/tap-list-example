@@ -1,18 +1,23 @@
 const express = require('express');
 const app = express();
-const port = 3030;
-const bodyParser = require('body-parser')
-const axios = require('axios');
-const aws4 = require('aws4');
+const port = 3030;const bodyParser = require('body-parser')
+
 const AWS = require('aws-sdk');
-const { TokenFileWebIdentityCredentials } = require('aws-sdk');
 
 AWS.config.loadFromPath('./credentials.json');
 
 let connections = [];
 let devices = [];
 let activeTokens = [];
-let tapListByToken = [];
+
+
+function generateTokenWithConnection(){
+    let token;
+    for(let i = 0; i <=6; i++){
+        token = token + String(Math.floor(Math.random() * 10));
+    }
+    return token; 
+}
 
 function getDeviceById(deviceId){
     let device = {};
@@ -26,9 +31,7 @@ function getDeviceById(deviceId){
             device = item;
         }
     });
-
     return device;
-
 }
 
 function getTokenByDevice(device){
@@ -72,7 +75,9 @@ app.post("/ping", function(req, res){
 });
 
 app.post("/connect", function(req, res){
-    res.sendStatus(200);
+    let token = generateTokenWithConnection();
+    console.log(token);
+    res.send("O token gerado foi", token);
 });
 
 app.post("/disconnect", async (req, res) => {
