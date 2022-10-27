@@ -19,6 +19,7 @@ function getDeviceById(deviceId){
         if(device['id'] === deviceId){
             return device
         }
+        console.log("Tô aqui piranha!!");
     });
 }
 
