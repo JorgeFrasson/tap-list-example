@@ -52,7 +52,7 @@ app.post("/ping", function(req, res){
 
     devices.forEach(item => {
         if(item['id'] == deviceId){
-            count += 1;
+            deviceCount+= 1;
         } 
     });
 
