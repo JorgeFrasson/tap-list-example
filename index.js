@@ -12,7 +12,7 @@ let activeTokens = [];
 
 
 function generateTokenWithConnection(){
-    let token;
+    let token = "";
     for(let i = 0; i <=6; i++){
         token = token + String(Math.floor(Math.random() * 10));
     }
@@ -77,7 +77,7 @@ app.post("/ping", function(req, res){
 app.post("/connect", function(req, res){
     let token = generateTokenWithConnection();
     console.log(token);
-    res.sendStatus(200).json(token)
+    res.status(200).end(token)
 });
 
 app.post("/disconnect", async (req, res) => {
