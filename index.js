@@ -16,10 +16,12 @@ let tapListByToken = [];
 
 function getDeviceById(deviceId){
     devices.forEach(device => {
+        console.log("Tô aqui piranha!!");
+        console.log(deviceId);
+        console.log(device);
         if(device['id'] === deviceId){
             return device
         }
-        console.log("Tô aqui piranha!!");
     });
 }
 
@@ -80,7 +82,7 @@ app.post("/sendtaplist", async (req, res)=> {
 
     console.log(device);
     
-    console.log("connectionId: ", device.connectionId);
+    console.log("connectionId: ", device['connectionId']);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
     console.log("Data ", tapList);
