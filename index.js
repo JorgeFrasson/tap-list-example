@@ -74,7 +74,7 @@ app.post("/ping", function(req, res){
     res.sendStatus(200);
 });
 
-app.post("/connect", function(req, res){
+app.post("/connect", async (req, res) => {
     const connectionId = req.body.connectionId;
     const deviceId = req.body.payload.deviceId;
     const region = req.body.region;
@@ -104,12 +104,11 @@ app.post("/connect", function(req, res){
         }).promise()
     } catch (e) {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
-
-
+    }
 
     console.log(token);
     console.log("Dispositivo onectado com ID:", req.body.connectionId);
-    res.status(200).end(token)
+    res.status(200).end(token);
 });
 
 app.post("/disconnect", async (req, res) => {
