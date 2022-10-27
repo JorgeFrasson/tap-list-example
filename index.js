@@ -80,6 +80,7 @@ app.post("/sendtaplist", async (req, res)=> {
     const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
 
+    console.log(req.body);
     console.log(device);
     
     console.log("connectionId: ", device['connectionId']);
