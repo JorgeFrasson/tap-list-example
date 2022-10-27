@@ -50,12 +50,8 @@ app.post("/connect", function(req, res){
 
 app.post("/disconnect", async (req, res) => {
     const connectionId = req.body.connectionId;
-    const token = req.body.payload.token;
-
     console.log("o usuario " + connectionId + " desconectou");
-    
     connections.splice(connections.indexOf(connectionId), 1);
-    activeTokens.splice(activeTokens.indexOf(token), 1);
     res.sendStatus(200);
 });
 
