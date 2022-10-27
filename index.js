@@ -94,7 +94,7 @@ app.post("/sendtaplist", async (req, res)=> {
     res.send("Mensagem recebida de " + connectionId);
 });
 
-app.get("/", function(req, res){
+app.post("/", function(req, res){
     console.log("Tô aqui buceta de dragão");
     res.send(JSON.stringify(req.body));
 });
