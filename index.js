@@ -76,7 +76,6 @@ app.post("/ping", function(req, res){
 
 app.post("/get-token", async (req, res) => {
     const token = getTokenByDevice();
-
     const connectionId = req.body.connectionId;
     const region = req.body.region;
     const domainName = req.body.domainName;
