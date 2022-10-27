@@ -17,9 +17,7 @@ let tapListByToken = [];
 function getDeviceById(deviceId){
     devices.forEach(device => {
         if(device.id === deviceId){
-            if(getTokenByDevice()){
-                return device;
-            }
+            return device
         }
     });
 }
@@ -78,6 +76,8 @@ app.post("/sendtaplist", async (req, res)=> {
     
     const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
+
+    console.log(device);
     
     console.log("connectionId: ", device.connectionId);
     console.log("region: ", region);
