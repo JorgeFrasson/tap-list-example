@@ -190,7 +190,7 @@ app.post("/validate-token", async (req, res) => {
     
     devices.forEach((device) => {
         if(token === device.token){
-            deviceId = connectionId;
+            deviceId = device.connectionId;
         }
     });
 
