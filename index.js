@@ -51,28 +51,28 @@ app.post("/ping", function(req, res){
     const deviceId = req.body.payload.deviceId; 
     let deviceCount = -1;
     let device = {
-        id: deviceId,
+        deviceId: deviceId,
         connectionId: connectionId,
         token: token,
     }
 
     devices.forEach(item => {
         if(item['deviceId'] == deviceId){
-            if(item['connectionId'] != ""){
+            if(item['connectionId'] === ""){
                 item['connectionId'] = connectionId;
                 deviceCount+= 1;
             }
         } 
     });
 
-    console.log(devices);
-
+    
     if(deviceCount == -1){
         connections.push(connectionId);
         activeTokens.push(token);
         devices.push(device);
     }
-
+    
+    console.log(devices);
     console.log("O dispositivo:", deviceId);
     console.log("ConnectionId:", connectionId);
     console.log("Token:", token);
