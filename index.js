@@ -182,7 +182,7 @@ app.post("/validate-token", async (req, res) => {
     const domainName = req.body.domainName;
     const stage = req.body.stage;
     const tokenStatus = "valid";
-    const deviceId = "";
+    let deviceId = "";
     if(!validateToken(token)){
         res.send("Token inválido tente novamente!");
         return
