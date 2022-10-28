@@ -96,7 +96,7 @@ app.post("/get-token", async (req, res) => {
     try {
         await apigwManagementApi.postToConnection({ 
             ConnectionId: connectionId,
-            Data: token
+            Data: JSON.stringify({"token": token})
         }).promise()
     } catch (e) {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
