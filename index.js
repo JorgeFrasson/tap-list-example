@@ -182,7 +182,7 @@ app.post("/validate-token", async (req, res) => {
     const domainName = req.body.domainName;
     const stage = req.body.stage;
     const tokenStatus = "valid";
-    
+    const deviceId = "";
     if(!validateToken(token)){
         res.send("Token inválido tente novamente!");
         return
@@ -191,11 +191,12 @@ app.post("/validate-token", async (req, res) => {
     devices.forEach((device) => {
         if(token === device.token){
             device.connectionId = connectionId;
+            deviceId = device.deviceId;
         }
     });
 
     const postData = JSON.stringify({
-        deviceId: connectionId,
+        deviceId: deviceId,
         tokenStatus: tokenStatus
     });
     const apiEndpoint = domainName + '/' + stage;
