@@ -11,12 +11,22 @@ let devices = [];
 let activeTokens = [];
 let tokenHasConnection = [];
 
-function generateTokenWithConnection(){
+function insertToken(){
+    let token = generateToken();
+
+    while(activeTokens.indexOf(token) > -1){
+        token = generateToken();
+    }
+
+    activeTokens.push(token);
+    return token
+}
+
+function generateToken(){
     let token = "";
     for(let i = 0; i < 6; i++){
         token = token + String(Math.floor(Math.random() * 10));
     }
-    activeTokens.push(token);
     return token; 
 }
 
@@ -82,7 +92,7 @@ app.post("/ping", function(req, res){
 });
 
 app.post("/get-token", async (req, res) => {
-    const token = generateTokenWithConnection();
+    const token = insertToken();
     const connectionId = req.body.connectionId;
     const region = req.body.region;
     const domainName = req.body.domainName;
