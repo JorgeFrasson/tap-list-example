@@ -160,6 +160,8 @@ app.post("/sendtaplist", async (req, res)=> {
         endpoint: apiEndpoint
     });
 
+    console.log("Torneiras enviadas a tela de conexão", deviceId);
+
     try {
         await apigwManagementApi.postToConnection({ 
             ConnectionId: device['connectionId'],
