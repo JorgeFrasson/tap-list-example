@@ -98,9 +98,8 @@ app.post("/get-token", async (req, res) => {
     console.log("Data ", token);
 
     let device = {
-        "deviceId": connectionId,
         "token": token,
-        "connectionId": ""
+        "connectionId": connectionId
     };
 
     devices.push(device);
@@ -171,7 +170,7 @@ app.post("/sendtaplist", async (req, res)=> {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
     }
 
-    res.send("Taplist enviada a" + device['connectionId']);
+    res.send("Taplist enviada a" + deviceId);
 });
 
 app.post("/validate-token", async (req, res) => {
