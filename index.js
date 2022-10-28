@@ -49,8 +49,7 @@ app.post("/ping", function(req, res){
     }
 
     devices.forEach(item => {
-        console.log(item);
-        if(activeTokens.indexOf(token) == item.token){
+        if(token == item.token){
             item.connectionId = connectionId;
             deviceCount += 1;
         } 
