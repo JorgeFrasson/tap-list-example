@@ -58,24 +58,18 @@ app.use(bodyParser.json());
 app.post("/ping", function(req, res){
     const connectionId = req.body.connectionId;
     const token = req.body.payload.token;
-    const deviceId = req.body.payload.deviceId; 
     let deviceCount = -1;
     let device = {
-        deviceId: deviceId,
         connectionId: connectionId,
         token: token,
     }
 
     devices.forEach(item => {
-        if(item['deviceId'] == deviceId){
-            if(item['connectionId'] === ""){
-                item['connectionId'] = connectionId;
-                deviceCount+= 1;
-            }
+        if(activeTokens.indexOf(token) == item.token){
+            deviceCount += 1;
         } 
     });
 
-    
     if(deviceCount == -1){
         connections.push(connectionId);
         activeTokens.push(token);
@@ -83,7 +77,6 @@ app.post("/ping", function(req, res){
     }
     
     console.log(devices);
-    console.log("O dispositivo:", deviceId);
     console.log("ConnectionId:", connectionId);
     console.log("Token:", token);
 
@@ -197,13 +190,13 @@ app.post("/validate-token", async (req, res) => {
     
     devices.forEach((device) => {
         if(token === device.token){
-            deviceId = device.deviceId;
+            connectionId = device.connectionId;
         }
     });
 
     const postData = JSON.stringify({
-        deviceId: deviceId,
-        tokenStatus: tokenStatus,
+        deviceId: connectionId,
+        tokenStatus: tokenStatus
     });
     const apiEndpoint = domainName + '/' + stage;
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
