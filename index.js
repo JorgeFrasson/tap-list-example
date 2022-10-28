@@ -140,19 +140,16 @@ app.post("/disconnect", async (req, res) => {
 
 
 app.post("/sendtaplist", async (req, res)=> {
-    const connectionId = req.body.connectionId;
     const deviceId = req.body.payload.deviceId;
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
     const tapList = req.body.payload.taplist;
-    
-    const device = getDeviceById(deviceId);
     const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
 
 
-    console.log("connectionId: ", device['connectionId']);
+    console.log("connectionId: ", deviceId);
     console.log("region: ", region);
     console.log("apiEndpoint: ", apiEndpoint); 
     console.log("Data ", tapList);
