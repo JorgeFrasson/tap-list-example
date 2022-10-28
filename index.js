@@ -30,27 +30,11 @@ function generateToken(){
     return token; 
 }
 
-function getDeviceById(deviceId){
-    let device = {};
-    devices.forEach(item => {
-        if(item['deviceId'] == deviceId.toString()){
-            device = item;
-        }
-    });
-    return device;
-}
-
 function validateToken(token){
     if(activeTokens.indexOf(token) > -1){
         return true;
     }
     return false;
-}
-
-function getTokenByDevice(device){
-    if(activeTokens.indexOf(device.token) === -1){
-        return true
-    }
 }
 
 app.use(bodyParser.json());
@@ -65,6 +49,7 @@ app.post("/ping", function(req, res){
     }
 
     devices.forEach(item => {
+        console.log(item);
         if(activeTokens.indexOf(token) == item.token){
             item.connectionId = connectionId;
             deviceCount += 1;
@@ -177,7 +162,6 @@ app.post("/sendtaplist", async (req, res)=> {
 
 app.post("/validate-token", async (req, res) => {
     const token = req.body.payload.token;
-    const connectionId = req.body.connectionId; 
     const region = req.body.region;
     const domainName = req.body.domainName;
     const stage = req.body.stage;
