@@ -62,6 +62,8 @@ app.post("/ping", function(req, res){
         } 
     });
 
+    console.log(devices);
+
     if(deviceCount == -1){
         connections.push(connectionId);
         activeTokens.push(token);
