@@ -66,6 +66,7 @@ app.post("/ping", function(req, res){
 
     devices.forEach(item => {
         if(activeTokens.indexOf(token) == item.token){
+            item.connectionId = connectionId;
             deviceCount += 1;
         } 
     });
@@ -103,6 +104,7 @@ app.post("/get-token", async (req, res) => {
     };
 
     devices.push(device);
+    activeTokens.push(token)
 
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: 'v2',
@@ -189,7 +191,7 @@ app.post("/validate-token", async (req, res) => {
     devices.forEach((device) => {
         if(token === device.token){
             device.connectionId = connectionId;
-            deviceId = device.deviceId;
+            deviceId = dev
         }
     });
 
