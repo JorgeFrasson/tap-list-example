@@ -6,32 +6,34 @@ const AWS = require('aws-sdk');
 
 AWS.config.loadFromPath('./credentials.json');
 
-let connections = [];
 let devices = [];
 let activeTokens = [];
-
+let tokenHasConnection = [];
 
 function generateTokenWithConnection(){
     let token = "";
-    for(let i = 0; i <=6; i++){
+    for(let i = 0; i < 6; i++){
         token = token + String(Math.floor(Math.random() * 10));
     }
+    activeTokens.push(token);
     return token; 
 }
 
 function getDeviceById(deviceId){
     let device = {};
-
     devices.forEach(item => {
-        console.log("Tô aqui piranha!!");
-        console.log(deviceId.toString());
-        console.log(item);
-        console.log(item['id']);
         if(item['id'] == deviceId.toString()){
             device = item;
         }
     });
     return device;
+}
+
+function validateToken(token){
+    if(activeTokens.indexOf(token) > -1){
+        return true;
+    }
+    return false;
 }
 
 function getTokenByDevice(device){
@@ -55,7 +57,7 @@ app.post("/ping", function(req, res){
 
     devices.forEach(item => {
         if(item['id'] == deviceId){
-            item['connectionId'] = connectionId;
+            item['deviceId'] = connectionId;
             deviceCount+= 1;
         } 
     });
@@ -87,6 +89,13 @@ app.post("/get-token", async (req, res) => {
     console.log("apiEndpoint: ", apiEndpoint); 
     console.log("Data ", token);
 
+    let device = {
+        "deviceId": connectionId,
+        "token": token
+    };
+
+    devices.push(device);
+
     const apigwManagementApi = new AWS.ApiGatewayManagementApi({
         apiVersion: 'v2',
         region: region,
@@ -101,6 +110,8 @@ app.post("/get-token", async (req, res) => {
     } catch (e) {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
     }
+
+    tokenHasConnection.push({"deviceId": connectionId, "token": token});
 
     res.send("Token enviado para" + connectionId);
 });
@@ -126,9 +137,9 @@ app.post("/sendtaplist", async (req, res)=> {
     const tapList = req.body.payload.taplist;
     
     const device = getDeviceById(deviceId);
-    
     const postData = JSON.stringify(tapList); 
     const apiEndpoint = domainName + '/' + stage;
+
 
     console.log("connectionId: ", device['connectionId']);
     console.log("region: ", region);
@@ -149,8 +160,51 @@ app.post("/sendtaplist", async (req, res)=> {
     } catch (e) {
         console.log('Não foi possível enviar a mensagem devido a: ', e);
     }
-    res.send("Mensagem recebida de " + connectionId);
+
+    res.send("Taplist enviada a" + device['connectionId']);
 });
+
+app.post("/validate-token", async (req, res) => {
+    const token = req.body.payload.token;
+    const connectionId = req.body.connectionId; 
+    const region = req.body.region;
+    const domainName = req.body.domainName;
+    const stage = req.body.stage;
+    const tokenStatus = "valid";
+    
+    if(!validateToken(token)){
+        res.send("Token inválido tente novamente!");
+        return
+    }
+    
+    devices.forEach((device) => {
+        if(token === device.token){
+            deviceId = device.deviceId;
+        }
+    });
+
+    const postData = JSON.stringify({
+        deviceId: deviceId,
+        tokenStatus: tokenStatus,
+    });
+    const apiEndpoint = domainName + '/' + stage;
+    const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+        apiVersion: 'v2',
+        region: region,
+        endpoint: apiEndpoint
+    });
+
+    try {
+        await apigwManagementApi.postToConnection({ 
+            ConnectionId: connectionId,
+            Data: postData
+        }).promise()
+    } catch (e) {
+        console.log('Não foi possível enviar a mensagem devido a: ', e);
+    }
+
+    res.send("Token validado");
+})
 
 app.post("/", function(req, res){
     console.log("Tô aqui buceta de dragão");
