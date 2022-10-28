@@ -164,7 +164,7 @@ app.post("/sendtaplist", async (req, res)=> {
 
     try {
         await apigwManagementApi.postToConnection({ 
-            ConnectionId: device['connectionId'],
+            ConnectionId: deviceId,
             Data: postData
         }).promise()
     } catch (e) {
