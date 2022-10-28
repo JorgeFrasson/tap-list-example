@@ -22,7 +22,7 @@ function generateTokenWithConnection(){
 function getDeviceById(deviceId){
     let device = {};
     devices.forEach(item => {
-        if(item['id'] == deviceId.toString()){
+        if(item['deviceId'] == deviceId.toString()){
             device = item;
         }
     });
@@ -56,9 +56,11 @@ app.post("/ping", function(req, res){
     }
 
     devices.forEach(item => {
-        if(item['id'] == deviceId){
-            item['deviceId'] = connectionId;
-            deviceCount+= 1;
+        if(item['deviceId'] == deviceId){
+            if(item['connectionId'] != ""){
+                item['connectionId'] = connectionId;
+                deviceCount+= 1;
+            }
         } 
     });
 
@@ -93,7 +95,8 @@ app.post("/get-token", async (req, res) => {
 
     let device = {
         "deviceId": connectionId,
-        "token": token
+        "token": token,
+        "connectionId": ""
     };
 
     devices.push(device);
@@ -125,7 +128,9 @@ app.post("/connect", async (req, res) => {
 app.post("/disconnect", async (req, res) => {
     const connectionId = req.body.connectionId;
     console.log("o usuario " + connectionId + " desconectou");
-    connections.splice(connections.indexOf(connectionId), 1);
+    if (connections.indexOf(connectionId) > -1) {
+        connections.splice(connections.indexOf(connectionId), 1);
+    }
     res.sendStatus(200);
 });
 
