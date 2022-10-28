@@ -204,7 +204,7 @@ app.post("/validate-token", async (req, res) => {
 
     try {
         await apigwManagementApi.postToConnection({ 
-            ConnectionId: connectionId,
+            ConnectionId: deviceId,
             Data: postData
         }).promise()
     } catch (e) {
